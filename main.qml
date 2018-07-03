@@ -40,7 +40,7 @@ Rectangle {
                 folder: shortcuts.home
                 onAccepted: {
                     console.log("You chose: " + fileDialog.fileUrl);
-                    openFile.ReadFile();
+                    openFile.fileName = fileDialog.fileUrl
                     console.log("read  OK!!!");
                 }
                 onRejected: {
@@ -315,15 +315,15 @@ Rectangle {
 Connections{
     target:dataPlot;
     onXvalueChanged:{
-        xypoint.x=xvalue;
-        console.debug("qmlxypoint.x=",xypoint.x);
+//        xypoint.x=xvalue;
+//        console.debug("qmlxypoint.x=",xypoint.x);
     }
 }
 Connections{
     target:dataPlot;
     onYvalueChanged:{
-        xypoint.y=yvalue;
-        console.debug("qmlxypoint.y=",xypoint.y);
+//        xypoint.y=yvalue;
+//        console.debug("qmlxypoint.y=",xypoint.y);
     }
 }
 

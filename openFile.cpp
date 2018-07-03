@@ -10,7 +10,6 @@
 
 #include <iostream>
 #include <stdlib.h>
-using namespace std;
 
 OpenFile::OpenFile(QObject *parent)
     :QObject(parent)
@@ -33,10 +32,27 @@ void OpenFile::ProduceRange()
     }
 }
 
+void OpenFile::setFileName(const QString &fileName)
+{
+    QString fileName_t = fileName;
+    qDebug()<<"setFileName called";
+    fileName_t = fileName_t.replace("file://","");
+    _fileName = fileName_t;
+    setFilePath(_fileName);
+    ReadFile();
+}
+
+void OpenFile::setFilePath(const QString &filePath)
+{
+    _filePath = filePath;
+    qDebug()<<"setFilePath called";
+}
+
 void OpenFile::ReadFile()
 {
-    qint64 pos;
-    QFile file("///home/zx/Documents/QplotTest/testdata.txt");// _filePath
+    qint64 pos;    int tempNum=0,i,buff[100];
+    QByteArray dat;
+    QFile file(_filePath);
     if (!file.open(QIODevice::ReadOnly))
     {
         qDebug()<< file.fileName() << file.exists();
@@ -49,14 +65,34 @@ void OpenFile::ReadFile()
     qDebug()<<"file.size="<<pos<<endl;
     while (!file.atEnd())
     {
-        QByteArray dat = file.read(30);
-        char *da=dat.data();
-        while(*da)
+        dat = file.read(512);
+        qDebug()<<dat.data();
+    }
+    char* numData=dat.data();
+    while(*numData)
+    {
+        if((*numData) ==',')
         {
-            qDebug()<<*da;
-            da++;
+            numData++;
         }
-    }   
+        else
+        {
+            tempNum = tempNum + (*numData)-'0';
+            numData++;
+            if((*numData) ==',')
+            {
+                numData++;
+                buff[i]=tempNum;
+                qDebug()<<"buff"<<"["<<i<<"]"<<"="<<buff[i];
+                tempNum=0;
+                i++;
+            }
+            else
+            {
+                tempNum=tempNum*10;
+            }
+        }
+    }
 }
 
 
