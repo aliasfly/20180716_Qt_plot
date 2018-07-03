@@ -23,7 +23,6 @@ Rectangle {
             anchors.leftMargin: 20;
             border.width: 1.5;
             border.color: "#888888";
-
             Button{                                            //OK
                 id:openfile;
                 anchors.top:outlineBorder.top;
@@ -33,7 +32,6 @@ Rectangle {
                 anchors.leftMargin: 5;
                 onClicked: fileDialog.open();
             }
-
             FileDialog {                                       //OK
                 id: fileDialog
                 title: "Please choose a file"
@@ -47,8 +45,6 @@ Rectangle {
                     console.log("Canceled")
                 }
             }
-
-
             Button{                                     //OK
                 id:rangemake;
                 anchors.top:outlineBorder.top;
@@ -58,24 +54,9 @@ Rectangle {
                 anchors.leftMargin: 5;
                 onClicked:
                 {
-                   messageDialog.open();
                    inputWindow.visible=true;
                 }
             }
-            MessageDialog {                             //OK
-                id: messageDialog;
-                title: "range A-B";
-                text: "enter number:";
-                onAccepted: {
-                    console.log("messageDialog.show up.");
-                    //put handle function;or connected function;
-                    openFile.ProduceRange();
-                    dataPlot.produceXYvalue();
-                }
-                Component.onCompleted: visible = false
-            }
-
-
             Button{                                    //OK
                 id:xmlout;
                 anchors.top:outlineBorder.top;
@@ -89,7 +70,6 @@ Rectangle {
                     console.log("writeXML end");
                 }
             }
-
             Rectangle{                               //input window;
                 id:inputWindow;
                 visible: false;
@@ -99,6 +79,13 @@ Rectangle {
                 border.color: "#888888";
                 border.width: 1.5;
                 z:2;
+                Text {
+                    id:inputWindowText
+                    text: "please enter 3 number"
+                    font.pixelSize: 20
+                    color: "red"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
                 Button{                             //inputWindowOk;
                     id:inputWindowOk;
                     anchors.right:inputWindow.right;
@@ -107,7 +94,10 @@ Rectangle {
                     anchors.bottomMargin: 3;
                     text:"Ok"
                     onClicked: {
-
+                        console.log("messageDialog.show up.");
+                        //put handle function;or connected function;
+                        openFile.ProduceRange();
+                        dataPlot.produceXYvalue();
                     }
                 }
                 Button{                               //inputWindowCancel
@@ -127,7 +117,7 @@ Rectangle {
                     font.pixelSize: 24;
                     anchors.left:inputWindow.left;
                     anchors.leftMargin:6;
-                    anchors.top: inputWindow.top;
+                    anchors.top: inputWindowText.bottom;
                     anchors.topMargin: 6;
                     TextInput{
                         id:textInputLine1;
@@ -162,7 +152,7 @@ Rectangle {
                 }
                 Text{                               //inputWindowLine3
                     id:inputWindowLine3;
-                    text:"random_n:";
+                    text:"  random_n:";
                     font.pixelSize: 24;
                     anchors.left:inputWindow.left;
                     anchors.leftMargin:6;
@@ -179,8 +169,6 @@ Rectangle {
                     }
                 }
             }
-
-
             Rectangle{
                 id:data_statistic;
                 width: 590;
@@ -192,7 +180,6 @@ Rectangle {
                 border.width: 1.5;
                 border.color:"#888888";
             }
-
             Rectangle{
                 id:chartplot;
                 width: 590;
@@ -205,36 +192,20 @@ Rectangle {
                 border.color: "#888888";
                 ChartView {
                       id: chartView
-                      animationOptions: ChartView.NoAnimation              //Animation is disabled in the chart
-                      legend.visible: false                                         //Graphic title
+                      legend.visible: true
                       anchors.fill: parent;
-                      onSeriesAdded: DataStore.seriesAdded()
-
-                      DataStore {
-                            id:dataStore
-                            axisX: axisX
-                            axisY: axisY
-//                            var myAxisX = chartView.axisX(lineSeries);
-//                            var myAxisY = chartView.axisY(lineSeries);
-//                            var scatter = chartView.createSeries(ChartView.SeriesTypeScatter, "scatter series", myAxisX, myAxisY);
-                      }
-
-
-
-                      DateTimeAxis {
-                          id: axisX
-                          titleFont.pointSize: 10
-                          labelsFont.pointSize: 10
-                      }
-
-                      ValueAxis {
-                          id: axisY
-                          titleFont.pointSize: 10
-                          labelsFont.pointSize: 10        //y zhou
+                      LineSeries {
+                          name: "LineSeries"
+                          XYPoint { x: 0; y: 0 }
+                          XYPoint { x: 1.1; y: 2.1 }
+                          XYPoint { x: 1.9; y: 3.3 }
+                          XYPoint { x: 2.1; y: 2.1 }
+                          XYPoint { x: 2.9; y: 4.9 }
+                          XYPoint { x: 3.4; y: 3.0 }
+                          XYPoint { x: 4.1; y: 3.3 }
                       }
                   }
             }
-
             Rectangle{
                 id:rcnumid;
                 width:135;
@@ -253,7 +224,6 @@ Rectangle {
                     font.pixelSize: 20;
                 }
             }
-
             Rectangle{
                 id:rcavgid;
                 width:135;
@@ -271,9 +241,7 @@ Rectangle {
                     text:"avg:";
                     font.pixelSize: 20;
                 }
-
             }
-
             Rectangle{
                 id:rcmaxid;
                 width:135;
@@ -292,7 +260,6 @@ Rectangle {
                     font.pixelSize: 20;
                 }
             }
-
             Rectangle{
                 id:rcminid;
                 width:135;
@@ -312,39 +279,37 @@ Rectangle {
                 }
             }
         }
-Connections{
-    target:dataPlot;
-    onXvalueChanged:{
-//        xypoint.x=xvalue;
-//        console.debug("qmlxypoint.x=",xypoint.x);
+    Connections{
+        target:dataPlot;
+        onXvalueChanged:{
+    //        xypoint.x=xvalue;
+    //        console.debug("qmlxypoint.x=",xypoint.x);
+        }
     }
-}
-Connections{
-    target:dataPlot;
-    onYvalueChanged:{
-//        xypoint.y=yvalue;
-//        console.debug("qmlxypoint.y=",xypoint.y);
+    Connections{
+        target:dataPlot;
+        onYvalueChanged:{
+    //        xypoint.y=yvalue;
+    //        console.debug("qmlxypoint.y=",xypoint.y);
+        }
     }
-}
-
-
-Connections{
-    target: dataStore;
-    onStrChanged:{
-        textInputLine1.text=str;
+    Connections{
+        target: dataStore;
+        onStrChanged:{
+            textInputLine1.text=str;
+        }
     }
-}
-Connections{
-    target: dataStore;
-    onStr2Changed:{
-        textInputLine2.validator=str2;
+    Connections{
+        target: dataStore;
+        onStr2Changed:{
+            textInputLine2.validator=str2;
+        }
     }
-}
-Connections{
-    target: dataStore;
-    onStr3Changed:{
-        textInputLine3.validator=str3;
+    Connections{
+        target: dataStore;
+        onStr3Changed:{
+            textInputLine3.validator=str3;
+        }
     }
-}
 }
 
