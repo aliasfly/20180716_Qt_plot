@@ -7,12 +7,6 @@ import DataStore 1.0
 Rectangle {
     width: 640;
     height: 480;
-    Text {                          //test to display
-        id: txtLabel;
-        anchors.centerIn: parent;
-        font.pixelSize: 26;
-        color: "red";
-    }
     Rectangle{
             id:outlineBorder;
             width: 600;
@@ -23,7 +17,7 @@ Rectangle {
             anchors.leftMargin: 20;
             border.width: 1.5;
             border.color: "#888888";
-            Button{                                            //OK
+            Button{
                 id:openfile;
                 anchors.top:outlineBorder.top;
                 anchors.topMargin: 5;
@@ -32,7 +26,7 @@ Rectangle {
                 anchors.leftMargin: 5;
                 onClicked: fileDialog.open();
             }
-            FileDialog {                                       //OK
+            FileDialog {
                 id: fileDialog
                 title: "Please choose a file"
                 folder: shortcuts.home
@@ -40,12 +34,17 @@ Rectangle {
                     console.log("You chose: " + fileDialog.fileUrl);
                     openFile.fileName = fileDialog.fileUrl
                     console.log("read  OK!!!");
+
+                    openFile.calculateSumNum();
+                    openFile.calculateAvgNum();
+                    openFile.calculateMaxNum();
+                    openFile.calculateMinNum();
                 }
                 onRejected: {
                     console.log("Canceled")
                 }
             }
-            Button{                                     //OK
+            Button{
                 id:rangemake;
                 anchors.top:outlineBorder.top;
                 anchors.topMargin: 5;
@@ -57,7 +56,7 @@ Rectangle {
                    inputWindow.visible=true;
                 }
             }
-            Button{                                    //OK
+            Button{
                 id:xmlout;
                 anchors.top:outlineBorder.top;
                 anchors.topMargin: 5;
@@ -70,7 +69,7 @@ Rectangle {
                     console.log("writeXML end");
                 }
             }
-            Rectangle{                               //input window;
+            Rectangle{
                 id:inputWindow;
                 visible: false;
                 width: 300;
@@ -86,7 +85,7 @@ Rectangle {
                     color: "red"
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
-                Button{                             //inputWindowOk;
+                Button{
                     id:inputWindowOk;
                     anchors.right:inputWindow.right;
                     anchors.rightMargin: 3;
@@ -94,13 +93,14 @@ Rectangle {
                     anchors.bottomMargin: 3;
                     text:"Ok"
                     onClicked: {
-                        console.log("messageDialog.show up.");
-                        //put handle function;or connected function;
-                        openFile.ProduceRange();
-                        dataPlot.produceXYvalue();
+                        inputWindow.visible=false
+//                        console.log("messageDialog.show up.");
+//                        //put handle function;or connected function;
+//                        openFile.ProduceRange();
+//                        dataPlot.produceXYvalue();
                     }
                 }
-                Button{                               //inputWindowCancel
+                Button{
                     id:inputWindowCancel;
                     anchors.right:inputWindowOk.left;
                     anchors.rightMargin: 2;
@@ -108,22 +108,22 @@ Rectangle {
                     anchors.bottomMargin: 3;
                     text:"Cancel"
                     onClicked: {
-                        inputWindow.visible=false;
+                        inputWindow.visible=false
                     }
                 }
-                Text{                                //inputWindowLine1
+                Text{
                     id:inputWindowLine1;
                     text:"start_value:";
-                    font.pixelSize: 24;
+                    font.pixelSize: 20;
                     anchors.left:inputWindow.left;
                     anchors.leftMargin:6;
                     anchors.top: inputWindowText.bottom;
-                    anchors.topMargin: 6;
+                    anchors.topMargin: 2;
                     TextInput{
                         id:textInputLine1;
                         width: 100;
                         height: 50;
-                        font.pixelSize: 24;
+                        font.pixelSize: 20;
                         anchors.left:inputWindowLine1.right;
                         validator: IntValidator{top:20; bottom: 1;}
                         color: "red";
@@ -132,53 +132,42 @@ Rectangle {
                         }
                     }
                 }
-                Text{                                //inputWindowLine2
+                Text{
                     id:inputWindowLine2;
                     text:"stop_value:";
-                    font.pixelSize: 24;
+                    font.pixelSize: 20;
                     anchors.left:inputWindow.left;
                     anchors.leftMargin:6;
                     anchors.top: inputWindowLine1.bottom;
-                    anchors.topMargin: 6;
+                    anchors.topMargin: 2;
                     TextInput{
                         id:textInputLine2;
                         width: 100;
                         height: 50;
-                        font.pixelSize: 24;
+                        font.pixelSize: 20;
                         anchors.left:inputWindowLine2.right;
                         validator: IntValidator{top:30; bottom: 1;}
                         color: "red";
                     }
                 }
-                Text{                               //inputWindowLine3
+                Text{
                     id:inputWindowLine3;
                     text:"  random_n:";
-                    font.pixelSize: 24;
+                    font.pixelSize: 20;
                     anchors.left:inputWindow.left;
                     anchors.leftMargin:6;
                     anchors.top: inputWindowLine2.bottom;
-                    anchors.topMargin: 6;
+                    anchors.topMargin: 2;
                     TextInput{
                         id:textInputLine3;
                         width: 100;
                         height: 50;
-                        font.pixelSize: 24;
+                        font.pixelSize: 20;
                         anchors.left:inputWindowLine3.right;
                         validator: IntValidator{top:40; bottom: 1;}
                         color: "red";
                     }
                 }
-            }
-            Rectangle{
-                id:data_statistic;
-                width: 590;
-                height: 90;
-                anchors.bottom: outlineBorder.bottom;
-                anchors.bottomMargin: 5;
-                anchors.left: outlineBorder.left;
-                anchors.leftMargin: 5;
-                border.width: 1.5;
-                border.color:"#888888";
             }
             Rectangle{
                 id:chartplot;
@@ -207,75 +196,50 @@ Rectangle {
                   }
             }
             Rectangle{
-                id:rcnumid;
-                width:135;
-                height: 80;
-                border.width: 1.5;
-                border.color: "#888888";
-                anchors.left:data_statistic.left;
-                anchors.leftMargin: 15;
-                anchors.top:data_statistic.top;
-                anchors.topMargin: 5;
-                Text{
-                    id: numid;
-                    anchors.left: rcnumid.left;
-                    anchors.leftMargin: 5;
-                    text: "num:";
-                    font.pixelSize: 20;
-                }
-            }
-            Rectangle{
-                id:rcavgid;
-                width:135;
-                height: 80;
-                border.width: 1.5;
-                border.color: "#888888";
-                anchors.left:rcnumid.right;
+                id:data_statistic;
+                width: 590;
+                height: 90;
+                anchors.bottom: outlineBorder.bottom;
+                anchors.bottomMargin: 5;
+                anchors.left: outlineBorder.left;
                 anchors.leftMargin: 5;
-                anchors.top:data_statistic.top;
-                anchors.topMargin: 5;
-                Text{
-                    id: avgid;
-                    anchors.left: rcavgid.left;
-                    anchors.leftMargin: 5;
-                    text:"avg:";
-                    font.pixelSize: 20;
-                }
-            }
-            Rectangle{
-                id:rcmaxid;
-                width:135;
-                height: 80;
                 border.width: 1.5;
-                border.color: "#888888";
-                anchors.left:rcavgid.right;
-                anchors.leftMargin: 5;
-                anchors.top:data_statistic.top;
-                anchors.topMargin: 5;
+                border.color:"#888888";
                 Text{
-                    id: maxid;
-                    anchors.left: rcmaxid.left;
-                    anchors.leftMargin: 5;
-                    text: "max:";
-                    font.pixelSize: 20;
+                    id: sum;
+                    width: 100
+                    anchors.verticalCenter: data_statistic.verticalCenter
+                    anchors.left:parent.left
+                    anchors.leftMargin: 20
+                    text: "sum: "+30;
+                    font.pixelSize: 30;
                 }
-            }
-            Rectangle{
-                id:rcminid;
-                width:135;
-                height: 80;
-                border.width: 1.5;
-                border.color: "#888888";
-                anchors.left:rcmaxid.right;
-                anchors.leftMargin: 5;
-                anchors.top:data_statistic.top;
-                anchors.topMargin: 5;
                 Text{
-                    id: minid;
-                    anchors.left: rcminid.left;
-                    anchors.leftMargin: 5;
-                    text: "min:";
-                    font.pixelSize: 20;
+                    id: avg;
+                    width: 160
+                    anchors.verticalCenter: data_statistic.verticalCenter
+                    anchors.left:sum.right
+                    anchors.leftMargin: 20
+                    text:"avg: "+31.86;
+                    font.pixelSize: 30;
+                }
+                Text{
+                    id: max;
+                    width: 140
+                    anchors.verticalCenter: data_statistic.verticalCenter
+                    anchors.left:avg.right
+                    anchors.leftMargin: 20
+                    text: "max: "+978;
+                    font.pixelSize: 30;
+                }
+                Text{
+                    id: min;
+                    width: 100
+                    anchors.verticalCenter: data_statistic.verticalCenter
+                    anchors.left:max.right
+                    anchors.leftMargin: 20
+                    text: "min: "+25;
+                    font.pixelSize: 30;
                 }
             }
         }

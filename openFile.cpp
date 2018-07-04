@@ -10,9 +10,16 @@
 
 #include <iostream>
 #include <stdlib.h>
+//********************************************************************
+int tempNum,i,buff[100];
+//********************************************************************
 
 OpenFile::OpenFile(QObject *parent)
     :QObject(parent)
+    ,_sumNum(0)
+    ,_avgNum(0)
+    ,_maxNum(0)
+    ,_minNum(0)
 {
 
 }
@@ -20,6 +27,55 @@ OpenFile::OpenFile(QObject *parent)
 OpenFile::~OpenFile()
 {
 
+}
+
+void OpenFile::calculateSumNum()
+{
+    _sumNum=0;
+    for(int j=0;j<=i;j++)
+    {
+        _sumNum=_sumNum+buff[j];
+    }
+    qDebug()<<"_sumNum="<<_sumNum;
+}
+void OpenFile::calculateAvgNum()
+{
+    int j=0;
+    float tmp=0;_avgNum=0;
+    for(j=0;j<=i;j++)
+    {
+        tmp=tmp+buff[j];
+    }
+    _avgNum=tmp/(j+1)*1.0;
+    qDebug()<<"_avgNum="<<_avgNum;
+}
+void OpenFile::calculateMaxNum()
+{
+    int maxTmp=0;
+    maxTmp=buff[0];
+    for(int j=0;j<i;j++)
+    {
+        if(maxTmp<=buff[j])
+        {
+            maxTmp=buff[j];
+        }
+    }
+    _maxNum=maxTmp;
+    qDebug()<<"_maxNum="<<_maxNum;
+}
+void OpenFile::calculateMinNum()
+{
+    int minTmp=0;
+    minTmp=buff[0];
+    for(int j=0;j<i;j++)
+    {
+        if(minTmp>=buff[j])
+        {
+            minTmp=buff[j];
+        }
+    }
+    _minNum=minTmp;
+    qDebug()<<"_minNum="<<_minNum;
 }
 
 void OpenFile::ProduceRange()
@@ -50,8 +106,9 @@ void OpenFile::setFilePath(const QString &filePath)
 
 void OpenFile::ReadFile()
 {
-    qint64 pos;    int tempNum=0,i,buff[100];
+    qint64 pos;
     QByteArray dat;
+    tempNum=0;i=0;
     QFile file(_filePath);
     if (!file.open(QIODevice::ReadOnly))
     {
