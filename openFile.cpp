@@ -14,14 +14,20 @@
 int tempNum,i,buff[100];
 //********************************************************************
 
+//********************************************************************
+
 OpenFile::OpenFile(QObject *parent)
     :QObject(parent)
     ,_sumNum(0)
     ,_avgNum(0)
     ,_maxNum(0)
     ,_minNum(0)
+    ,_xMinValue(0)
+    ,_xMaxValue(0)
+    ,_yMinValue(0)
+    ,_yMaxValue(0)
 {
-
+    QObject::connect(this,SIGNAL(filechanged()),this,SLOT(changefile()));
 }
 
 OpenFile::~OpenFile()
@@ -32,13 +38,13 @@ OpenFile::~OpenFile()
 void OpenFile::setAxisX(QAbstractAxis *axisX)
 {
     _axisX = axisX;
-//    _axisX->setRange(DataStore::_xMinValue,DataStore::_xMaxValue);
+    _axisX->setRange(OpenFile::_xMinValue,OpenFile::_xMaxValue);
 }
 
 void OpenFile::setAxisY(QAbstractAxis *axisY)
 {
     _axisY = axisY;
-//    _axisY->setRange(DataStore::_yMinValue,DataStore::_yMaxValue);
+    _axisY->setRange(OpenFile::_yMinValue,OpenFile::_yMaxValue);
 }
 
 void OpenFile::calculateSumNum()
@@ -162,8 +168,12 @@ void OpenFile::ReadFile()
             }
         }
     }
+    emit filechanged();
 }
-
+void OpenFile::changefile()
+{
+    qDebug()<<"emit filechanged() called!!!!!";
+}
 
 void OpenFile::writeXML() {
     QString strFile("Blogs.xml");

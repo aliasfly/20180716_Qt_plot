@@ -192,6 +192,25 @@ Rectangle {
                       backgroundColor: Qt.rgba(1,0,0,1)
                       OpenFile {
                         id:openChart
+                        axisX:axisX
+                        axisY:axisY
+                      }
+                      Connections{
+                          target: openFile
+                          onFilechanged: {
+                              chartView.backgroundColor=Qt.rgba(0,0,0,1)
+                          }
+                      }
+                      DateTimeAxis {
+                          id: axisX
+                          titleFont.pointSize: 10
+                          labelsFont.pointSize: 10
+                      }
+
+                      ValueAxis {
+                          id: axisY
+                          titleFont.pointSize: 10
+                          labelsFont.pointSize: 10
                       }
                   }
             }
@@ -247,5 +266,6 @@ Rectangle {
                 }
             }
         }
+
 }
 

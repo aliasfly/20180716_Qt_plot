@@ -15,6 +15,11 @@ class OpenFile : public QObject
 
     Q_PROPERTY(QAbstractAxis* axisX READ axisX WRITE setAxisX)
     Q_PROPERTY(QAbstractAxis* axisY READ axisY WRITE setAxisY)
+
+    Q_PROPERTY(int xMaxValue READ xMaxValue)
+    Q_PROPERTY(int xMinValue READ xMinValue)
+    Q_PROPERTY(int yMaxValue READ yMaxValue)
+    Q_PROPERTY(int yMinValue READ yMinValue)
 public:
     OpenFile(QObject *parent = 0);
     ~OpenFile();
@@ -34,10 +39,19 @@ public:
     void setAxisX(QAbstractAxis* axisX);
     void setAxisY(QAbstractAxis* axisY);
 
+    int xMaxValue() const { return _xMaxValue; }
+    int xMinValue() const { return _xMinValue; }
+    int yMaxValue() const { return _yMaxValue; }
+    int yMinValue() const { return _yMinValue; }
+
+signals:
+    void filechanged();
+
 public slots:
     void ProduceRange();
     void ReadFile();
     void writeXML();
+    void changefile();
 
     void calculateSumNum();
     void calculateAvgNum();
@@ -53,6 +67,10 @@ private:
 
     QAbstractAxis*   _axisX;
     QAbstractAxis*   _axisY;
+    int _xMaxValue;
+    int _xMinValue;
+    int _yMaxValue;
+    int _yMinValue;
 };
 
 #endif // OPENFILE_H
