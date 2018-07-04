@@ -23,9 +23,9 @@ OpenFile::OpenFile(QObject *parent)
     ,_maxNum(0)
     ,_minNum(0)
     ,_xMinValue(0)
-    ,_xMaxValue(0)
+    ,_xMaxValue(30)
     ,_yMinValue(0)
-    ,_yMaxValue(0)
+    ,_yMaxValue(100)
 {
     QObject::connect(this,SIGNAL(filechanged()),this,SLOT(changefile()));
 }
@@ -33,6 +33,22 @@ OpenFile::OpenFile(QObject *parent)
 OpenFile::~OpenFile()
 {
 
+}
+
+void OpenFile::seriesAdded(QAbstractSeries* series)
+{
+//    bool yrangeChange = false;
+//    DataPlot* dataPlot;
+//    if(dataPlot->minValue() < DataStore::_yMinValue) {
+//        DataStore::_yMinValue = dataPlot->minValue();
+//        yrangeChange = true;
+//    }
+//    if(dataPlot->maxValue() > DataStore::_yMaxValue) {
+//        DataStore::_yMaxValue = dataPlot->maxValue();
+//        yrangeChange = true;
+//    }
+//    if(yrangeChange)
+//        _axisY->setRange(DataStore::_yMinValue,DataStore::_yMaxValue);
 }
 
 void OpenFile::setAxisX(QAbstractAxis *axisX)

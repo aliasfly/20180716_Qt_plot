@@ -188,6 +188,7 @@ Rectangle {
                       id: chartView
                       legend.visible: true
                       anchors.fill: parent;
+                      onSeriesAdded:openFile.seriesAdded(series)
                       OpenFile {
                         id:openChart
                         axisX:axisX
@@ -197,7 +198,8 @@ Rectangle {
                           target: openFile
                           onFilechanged: {
                               chartView.removeAllSeries()
-                              chartView.createSeries(ChartView.SeriesTypeLine, "111", axisX, axisY);
+                              chartView.createSeries(ChartView.SeriesTypeLine, "Line", axisX, axisY);
+                              chartView.createSeries(ChartView.SeriesTypeScatter, "Scatter", axisX, axisY);
                               chartView.zoom(1)
                           }
                       }

@@ -3,6 +3,7 @@
 #include <QObject>
 #include "dataPlot.h"
 #include <QAbstractAxis>
+#include <QScatterSeries>
 QT_CHARTS_USE_NAMESPACE
 class OpenFile : public QObject
 {
@@ -57,6 +58,8 @@ public slots:
     void calculateAvgNum();
     void calculateMaxNum();
     void calculateMinNum();
+
+    void seriesAdded(QAbstractSeries* series);
 private:
     QString _fileName;
     QString _filePath;
