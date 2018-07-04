@@ -188,8 +188,6 @@ Rectangle {
                       id: chartView
                       legend.visible: true
                       anchors.fill: parent;
-                      title: "file_data_statistic"
-                      backgroundColor: Qt.rgba(1,0,0,1)
                       OpenFile {
                         id:openChart
                         axisX:axisX
@@ -198,15 +196,16 @@ Rectangle {
                       Connections{
                           target: openFile
                           onFilechanged: {
-                              chartView.backgroundColor=Qt.rgba(0,0,0,1)
+                              chartView.removeAllSeries()
+                              chartView.createSeries(ChartView.SeriesTypeLine, "111", axisX, axisY);
+                              chartView.zoom(1)
                           }
                       }
-                      DateTimeAxis {
+                      ValueAxis {
                           id: axisX
                           titleFont.pointSize: 10
                           labelsFont.pointSize: 10
                       }
-
                       ValueAxis {
                           id: axisY
                           titleFont.pointSize: 10
