@@ -2,7 +2,7 @@ import QtQuick 2.2
 import QtCharts 2.2
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.3
-import DataStore 1.0
+import OpenFile 1.0
 
 Rectangle {
     width: 640;
@@ -39,6 +39,11 @@ Rectangle {
                     openFile.calculateAvgNum();
                     openFile.calculateMaxNum();
                     openFile.calculateMinNum();
+
+                    sum.text="sum: " + openFile.sumNum;
+                    avg.text="avg: " + openFile.avgNum;
+                    max.text="max: " + openFile.maxNum;
+                    min.text="min: " + openFile.minNum;
                 }
                 onRejected: {
                     console.log("Canceled")
@@ -183,16 +188,8 @@ Rectangle {
                       id: chartView
                       legend.visible: true
                       anchors.fill: parent;
-                      LineSeries {
-                          name: "LineSeries"
-                          XYPoint { x: 0; y: 0 }
-                          XYPoint { x: 1.1; y: 2.1 }
-                          XYPoint { x: 1.9; y: 3.3 }
-                          XYPoint { x: 2.1; y: 2.1 }
-                          XYPoint { x: 2.9; y: 4.9 }
-                          XYPoint { x: 3.4; y: 3.0 }
-                          XYPoint { x: 4.1; y: 3.3 }
-                      }
+                      title: "file_data_statistic"
+                      backgroundColor: Qt.rgba(1,0,0,1)
                   }
             }
             Rectangle{
@@ -210,36 +207,40 @@ Rectangle {
                     width: 100
                     anchors.verticalCenter: data_statistic.verticalCenter
                     anchors.left:parent.left
-                    anchors.leftMargin: 20
-                    text: "sum: "+30;
+                    anchors.leftMargin: 10
+                    text: "sum: "+0;
                     font.pixelSize: 30;
+                    color: Qt.rgba(1,0,0,1)
                 }
                 Text{
                     id: avg;
                     width: 160
                     anchors.verticalCenter: data_statistic.verticalCenter
                     anchors.left:sum.right
-                    anchors.leftMargin: 20
-                    text:"avg: "+31.86;
+                    anchors.leftMargin: 60
+                    text:"avg: "+0;
                     font.pixelSize: 30;
+                    color: Qt.rgba(0,0.5,0,1)
                 }
                 Text{
                     id: max;
                     width: 140
                     anchors.verticalCenter: data_statistic.verticalCenter
                     anchors.left:avg.right
-                    anchors.leftMargin: 20
-                    text: "max: "+978;
+                    anchors.leftMargin: 25
+                    text: "max: "+0;
                     font.pixelSize: 30;
+                    color: Qt.rgba(0,0,0.5,1)
                 }
                 Text{
                     id: min;
                     width: 100
                     anchors.verticalCenter: data_statistic.verticalCenter
                     anchors.left:max.right
-                    anchors.leftMargin: 20
-                    text: "min: "+25;
+                    anchors.leftMargin: 1
+                    text: "min: "+0;
                     font.pixelSize: 30;
+                    color: Qt.rgba(1,0.5,0,1)
                 }
             }
         }
