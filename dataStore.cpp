@@ -15,21 +15,16 @@ DataStore::DataStore(QObject *parent)
 
 }
 
-
 DataStore::~DataStore()
 {
-    _axisX = _axisY = NULL;
-}
 
+}
 
 void DataStore::getstr(int a)
 {
     AAA_currentstr=a;
     qDebug()<<"AAA_currentstr="<<AAA_currentstr;
 }
-
-
-
 
 int DataStore::str() const
 {
@@ -61,21 +56,6 @@ void DataStore::setStr3(const int &str3)
     emit str3Changed(CCC_currentstr);
 }
 
-
-
-void DataStore::setAxisX(QAbstractAxis *axisX)
-{
-    _axisX = axisX;
-    _axisX->setRange(DataStore::_xMinValue,DataStore::_xMaxValue);
-}
-
-void DataStore::setAxisY(QAbstractAxis *axisY)
-{
-    _axisY = axisY;
-    _axisY->setRange(DataStore::_yMinValue,DataStore::_yMaxValue);
-}
-
-
 void DataStore::seriesAdded()
 {
     bool yrangeChange = false;
@@ -88,6 +68,6 @@ void DataStore::seriesAdded()
         DataStore::_yMaxValue = dataPlot->maxValue();
         yrangeChange = true;
     }
-    if(yrangeChange)
-        _axisY->setRange(DataStore::_yMinValue,DataStore::_yMaxValue);
+//    if(yrangeChange)
+//        _axisY->setRange(DataStore::_yMinValue,DataStore::_yMaxValue);
 }

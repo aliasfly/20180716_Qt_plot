@@ -29,6 +29,18 @@ OpenFile::~OpenFile()
 
 }
 
+void OpenFile::setAxisX(QAbstractAxis *axisX)
+{
+    _axisX = axisX;
+//    _axisX->setRange(DataStore::_xMinValue,DataStore::_xMaxValue);
+}
+
+void OpenFile::setAxisY(QAbstractAxis *axisY)
+{
+    _axisY = axisY;
+//    _axisY->setRange(DataStore::_yMinValue,DataStore::_yMaxValue);
+}
+
 void OpenFile::calculateSumNum()
 {
     _sumNum=0;

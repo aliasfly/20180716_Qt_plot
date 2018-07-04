@@ -190,6 +190,9 @@ Rectangle {
                       anchors.fill: parent;
                       title: "file_data_statistic"
                       backgroundColor: Qt.rgba(1,0,0,1)
+                      OpenFile {
+                        id:openChart
+                      }
                   }
             }
             Rectangle{
@@ -244,37 +247,5 @@ Rectangle {
                 }
             }
         }
-    Connections{
-        target:dataPlot;
-        onXvalueChanged:{
-    //        xypoint.x=xvalue;
-    //        console.debug("qmlxypoint.x=",xypoint.x);
-        }
-    }
-    Connections{
-        target:dataPlot;
-        onYvalueChanged:{
-    //        xypoint.y=yvalue;
-    //        console.debug("qmlxypoint.y=",xypoint.y);
-        }
-    }
-    Connections{
-        target: dataStore;
-        onStrChanged:{
-            textInputLine1.text=str;
-        }
-    }
-    Connections{
-        target: dataStore;
-        onStr2Changed:{
-            textInputLine2.validator=str2;
-        }
-    }
-    Connections{
-        target: dataStore;
-        onStr3Changed:{
-            textInputLine3.validator=str3;
-        }
-    }
 }
 
