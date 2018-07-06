@@ -188,7 +188,10 @@ Rectangle {
                       id: chartView
                       legend.visible: true
                       anchors.fill: parent;
-                      onSeriesAdded:openFile.seriesAdded(series)
+                      onSeriesAdded:{
+                          console.log("onSeriesAdded--enter!")
+                          openFile.seriesAdded(series)
+                      }
                       OpenFile {
                         id:openChart
                         axisX:axisX
@@ -198,9 +201,10 @@ Rectangle {
                           target: openFile
                           onFilechanged: {
                               chartView.removeAllSeries()
-                              chartView.createSeries(ChartView.SeriesTypeLine, "Line", axisX, axisY);
-                              chartView.createSeries(ChartView.SeriesTypeScatter, "Scatter", axisX, axisY);
+                              chartView.createSeries(ChartView.SeriesTypeLine,1,axisX, axisY);
                               chartView.zoom(1)
+                              openChart.axisX=axisX
+                              openChart.axisY=axisY
                           }
                       }
                       ValueAxis {

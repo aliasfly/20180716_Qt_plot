@@ -4,6 +4,8 @@
 #include "dataPlot.h"
 #include <QAbstractAxis>
 #include <QScatterSeries>
+#include <QXYSeries>
+#include <QStringList>
 QT_CHARTS_USE_NAMESPACE
 class OpenFile : public QObject
 {
@@ -21,6 +23,7 @@ class OpenFile : public QObject
     Q_PROPERTY(int xMinValue READ xMinValue)
     Q_PROPERTY(int yMaxValue READ yMaxValue)
     Q_PROPERTY(int yMinValue READ yMinValue)
+
 public:
     OpenFile(QObject *parent = 0);
     ~OpenFile();
@@ -44,6 +47,8 @@ public:
     int xMinValue() const { return _xMinValue; }
     int yMaxValue() const { return _yMaxValue; }
     int yMinValue() const { return _yMinValue; }
+
+    QVector<QPointF> getDataSource();
 
 signals:
     void filechanged();
@@ -70,10 +75,10 @@ private:
 
     QAbstractAxis*   _axisX;
     QAbstractAxis*   _axisY;
-    int _xMaxValue;
-    int _xMinValue;
-    int _yMaxValue;
-    int _yMinValue;
+    static quint64 _xMaxValue;
+    static quint64 _xMinValue;
+    static double _yMaxValue;
+    static double _yMinValue;
 };
 
 #endif // OPENFILE_H

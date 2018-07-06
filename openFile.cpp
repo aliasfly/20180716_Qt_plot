@@ -13,19 +13,14 @@
 //********************************************************************
 int tempNum,i,buff[100];
 //********************************************************************
-
+quint64 OpenFile::_xMaxValue = 30;
+quint64 OpenFile::_xMinValue = 0;
+double OpenFile::_yMaxValue = 100;
+double OpenFile::_yMinValue = 0;
 //********************************************************************
 
 OpenFile::OpenFile(QObject *parent)
     :QObject(parent)
-    ,_sumNum(0)
-    ,_avgNum(0)
-    ,_maxNum(0)
-    ,_minNum(0)
-    ,_xMinValue(0)
-    ,_xMaxValue(30)
-    ,_yMinValue(0)
-    ,_yMaxValue(100)
 {
     QObject::connect(this,SIGNAL(filechanged()),this,SLOT(changefile()));
 }
@@ -37,28 +32,63 @@ OpenFile::~OpenFile()
 
 void OpenFile::seriesAdded(QAbstractSeries* series)
 {
-//    bool yrangeChange = false;
-//    DataPlot* dataPlot;
-//    if(dataPlot->minValue() < DataStore::_yMinValue) {
-//        DataStore::_yMinValue = dataPlot->minValue();
-//        yrangeChange = true;
-//    }
-//    if(dataPlot->maxValue() > DataStore::_yMaxValue) {
-//        DataStore::_yMaxValue = dataPlot->maxValue();
-//        yrangeChange = true;
-//    }
-//    if(yrangeChange)
-//        _axisY->setRange(DataStore::_yMinValue,DataStore::_yMaxValue);
+    qDebug()<<"void OpenFile::seriesAdded(QAbstractSeries* series)   Called";
+    bool xrangeChange = false;
+    bool yrangeChange = false;
+    QXYSeries *xySeries = static_cast<QXYSeries *>(series);
+    qDebug()<<"print _minNum="<<_minNum<<"_xMinValue="<<_xMinValue;
+    if(_minNum<_xMinValue)
+    {
+        _xMinValue=_minNum;
+        xrangeChange = true;
+    }
+    qDebug()<<"print _maxNum="<<_maxNum<<"_xMaxValue="<<_xMaxValue;
+    if(_xMaxValue<_maxNum)
+    {
+        _xMaxValue=_maxNum;
+        xrangeChange = true;
+    }
+    qDebug()<<"print _minNum="<<_minNum<<"_yMinValue="<<_yMinValue;
+    if(_minNum<_yMinValue)
+    {
+        _yMinValue=_minNum;
+        yrangeChange = true;
+    }
+    qDebug()<<"print _maxNum="<<_maxNum<<"_yMaxValue="<<_yMaxValue;
+    if(_yMaxValue<_maxNum)
+    {
+        _yMaxValue=_maxNum;
+        yrangeChange = true;
+    }
+    if(xrangeChange)
+    {
+        if(_yMaxValue == _yMinValue)
+        {
+            _yMaxValue++;
+        }
+        qDebug()<<"xrangeChange==true";
+    }
+    if(yrangeChange)
+    {
+        qDebug()<<"yrangeChange==true";
+    }
+//    xySeries->replace(getDataSource());
+}
+QVector<QPointF> OpenFile::getDataSource()
+{
+
 }
 
 void OpenFile::setAxisX(QAbstractAxis *axisX)
 {
+    qDebug()<<"void OpenFile::setAxisX   Called";
     _axisX = axisX;
     _axisX->setRange(OpenFile::_xMinValue,OpenFile::_xMaxValue);
 }
 
 void OpenFile::setAxisY(QAbstractAxis *axisY)
 {
+    qDebug()<<"void OpenFile::setAxisY   Called";
     _axisY = axisY;
     _axisY->setRange(OpenFile::_yMinValue,OpenFile::_yMaxValue);
 }
@@ -110,6 +140,7 @@ void OpenFile::calculateMinNum()
     }
     _minNum=minTmp;
     qDebug()<<"_minNum="<<_minNum;
+    emit filechanged();
 }
 
 void OpenFile::ProduceRange()
@@ -184,7 +215,6 @@ void OpenFile::ReadFile()
             }
         }
     }
-    emit filechanged();
 }
 void OpenFile::changefile()
 {
