@@ -79,12 +79,12 @@ QVector<QPointF> OpenFile::getDataSource()
     qDebug()<<"QVector<QPointF> OpenFile::getDataSource()  Called~~~~~~~~~~~~~~~~~";
     _datasource.clear();
     qDebug()<<"1111111111111111";
-//    for(int k = 0; k < 1; k++)
-//    {
-//        QVector<QPointF> points;
-//        _datasource.append(points);
-//        qDebug()<<"QVector<QPointF> points;    Enter!!!";
-//    }
+    for(int k = 0; k < 1; k++)
+    {
+        QVector<QPointF> points;
+        _datasource.append(points);
+        qDebug()<<"QVector<QPointF> points;    Enter!!!";
+    }
     qDebug()<<"i======"<<i;
     qDebug()<<"buff[i]======"<<buff[i-1];
     for(int k=0;k<i;k++)
