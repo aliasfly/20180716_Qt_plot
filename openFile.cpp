@@ -72,11 +72,43 @@ void OpenFile::seriesAdded(QAbstractSeries* series)
     {
         qDebug()<<"yrangeChange==true";
     }
-//    xySeries->replace(getDataSource());
+    xySeries->replace(getDataSource());
 }
 QVector<QPointF> OpenFile::getDataSource()
 {
+    qDebug()<<"QVector<QPointF> OpenFile::getDataSource()  Called~~~~~~~~~~~~~~~~~";
+    _datasource.clear();
+    qDebug()<<"1111111111111111";
+//    for(int k = 0; k < 1; k++)
+//    {
+//        QVector<QPointF> points;
+//        _datasource.append(points);
+//        qDebug()<<"QVector<QPointF> points;    Enter!!!";
+//    }
+    qDebug()<<"i======"<<i;
+    qDebug()<<"buff[i]======"<<buff[i-1];
+    for(int k=0;k<i;k++)
+    {
 
+        qDebug()<<"22222222222222222222";
+        qDebug()<<"k======"<<k;
+        _datasource[0].append(QPointF(k,buff[k]));
+        qDebug()<<"_datasource[0].append(QPointF(k,buff[k]));-----------Called OK~~"<<_datasource.at(0);
+    }
+//*******************************************************************************************
+//        _datasource[0].append(QPointF(1,20));
+//        _datasource[0].append(QPointF(20,43));
+//        _datasource[0].append(QPointF(40,64));
+//        _datasource[0].append(QPointF(60,16));
+//        _datasource[0].append(QPointF(80,86));
+//        _datasource[0].append(QPointF(100,25));
+//        _datasource[0].append(QPointF(120,97));
+//        _datasource[0].append(QPointF(140,38));
+//        _datasource[0].append(QPointF(160,186));
+//        _datasource[0].append(QPointF(180,6));
+//*******************************************************************************************
+    qDebug()<<"_datasource.at(0)======="<<_datasource.at(0);
+    return _datasource.at(0);
 }
 
 void OpenFile::setAxisX(QAbstractAxis *axisX)

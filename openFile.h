@@ -6,6 +6,10 @@
 #include <QScatterSeries>
 #include <QXYSeries>
 #include <QStringList>
+#include <QString>
+#include <QVector>
+#include <QPointF>
+#include <QList>
 QT_CHARTS_USE_NAMESPACE
 class OpenFile : public QObject
 {
@@ -79,6 +83,9 @@ private:
     static quint64 _xMinValue;
     static double _yMaxValue;
     static double _yMinValue;
+
+
+    QList<QVector<QPointF>> _datasource;
 };
 
 #endif // OPENFILE_H

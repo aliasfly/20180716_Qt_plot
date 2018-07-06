@@ -190,6 +190,7 @@ Rectangle {
                       anchors.fill: parent;
                       onSeriesAdded:{
                           console.log("onSeriesAdded--enter!")
+                          console.log("series========",series)
                           openFile.seriesAdded(series)
                       }
                       OpenFile {
